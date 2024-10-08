@@ -1,0 +1,16 @@
+server:					client:
+rpm -q nfs-utils			ifconfig
+ifconfig				showmount -e 10.0.0.100 
+mkdir /data				mkdir localdir1,localdir2
+touch /data/{1.txt,2.txt}		mount -t nfs 10.0.0.100:/data localdir1
+mkdir /alpha				mount -t nfs 10.0.0.100:/alpha localdir2
+touch /alpha/{3.txt,4.txt}		ls localdir1
+chmod -R 777 /data			ls localdir2
+chmod -R 777 /alpha			touch new.txt
+vi /etc/exports
+{
+/data
+/alpha (rw,sync,root_squash)
+}
+systemctl restart nfs
+systemctl status nfs

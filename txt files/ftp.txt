@@ -1,0 +1,16 @@
+server:						client:
+rpm -q vsftpd					rpm -q ftp
+cd /var/ftp					ifconfig
+touch pub/{file1,file2}				ftp 10.0.0.100
+cd /etc/vsftpd					cd pub
+vi vsftpd.conf					get file1
+{						put file3
+listen=yes
+write_enable=yes
+anon_upload_enable=yes
+}
+systemctl restart vsftpd
+systemctl status vsftpd
+systemctl stop firewalld
+setenforce=0
+chmod 777 /var/ftp/pub

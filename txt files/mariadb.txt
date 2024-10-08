@@ -1,0 +1,16 @@
+rpm -q mariadb
+
+systemctl restart mariadb
+systemctl status mariadb
+
+mysql_secure_installation
+
+MySQL -u root -p
+
+db queries
+
+exit
+
+mysqldump -u root -p model > /root/model.sql
+
+ls

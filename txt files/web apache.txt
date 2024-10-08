@@ -1,0 +1,18 @@
+basic:							Secure Web:
+rpm -q httpd						yum install -y crypto-utils mod_ssl
+cd /var/www/html					genkey --days 365 www.student.com
+vi index.html						next - next - no - next - fill_details - next
+{ basic html code }					openssl x509 -text < /etc/pki/tls/certs/www.student.com.crt
+cd /etc/httpd/conf					cd /etc/httpd/conf.d
+vi httpd.conf						cp ssl.conf ssl.conf.samp & vi ssl.conf
+{							{
+<VirtualHost 10.0.0.102:80>				56: <VirtualHost 10.0.0.100:443>
+ServerAdmin root@www.student.com			58: DocumentRoot "/var/www/html"
+ErrorLog logs/student.com_access_error_log		59: ServerName www.student.com:443
+CustomLog logs/student.com_access_log common		99: SSLCertificateFile /etc/pki/tls/crts/www.student.com.crt
+</VirtualHost>						106: SSLCertificateKeyFile /etc/pki/tls/private/www.student.com.key
+}							}
+
+systemctl restart httpd					systemctl restart httpd
+systemctl status httpd					systemctl status httpd
+systemctl stop firewalld				systemctl stop firewalld

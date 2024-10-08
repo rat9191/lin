@@ -1,0 +1,31 @@
+rpm -q postfix
+
+cd /etc/postfix
+
+vi main.cf
+
+edit:
+{
+76: myhostname = mail.student.com
+98: myorigin = $myhostname
+113: inet_interface = all
+comment line number 116
+119: inet_protocols = all
+264: mynetwork = 10.0.0./8, 127.0.0.0/8
+296: relay_domains = $mydestination
+317: relayhost = [10.0.0.100]
+419: home_mailbox = Maildir/
+}
+
+restart status postfix and stop firewalld
+
+mail -s "postfixdemo" username
+
+end with EOT
+
+login user :
+go to maildir 
+
+cd new
+
+cat (string)

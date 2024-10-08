@@ -1,0 +1,20 @@
+client:
+rpm -q openssh
+ssh root@ip_add
+ssh-keygen -t dsa
+
+server:
+ls -a
+cd .ssh
+mkdir authorised_keys
+systemctl stop firewalld
+
+client:
+
+scp /root/.ssh/id_dsa.pub ip_add:/root/.ssh/authorised_keys
+
+server:
+
+ls authorised_keys
+
+client : ssh root@id_addr and after login who command.

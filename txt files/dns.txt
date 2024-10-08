@@ -1,0 +1,35 @@
+server										systemctl restart firewalld
+										vi /etc/resolv.conf
+rpm -q bind									{
+										nameserver 10.0.0.100
+vi /etc/named.conf								}
+										nslookup www.student.com
+{									
+options{									
+listen-on-port {ip,};								
+allow-query {any;};								
+}											
+
+zone "student.com"{
+type master;
+file "zone.student.com";
+}
+}
+
+cd /var/named
+vi zone.student.com
+{
+$TTL 1M
+@	IN	SOA	tyit.student.com.	root.tyit.student.com. (
+			12345
+			1H
+			15M
+			1D
+			5M);
+@	IN	NS	tyit.student.com.
+tyit.student.com.	IN	A	10.0.0.100
+www.student.com.	IN	A	10.0.0.101
+ftp.student.com.	IN	A	10.0.0.102
+}
+service named restart
+systemctl status named

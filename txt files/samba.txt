@@ -1,0 +1,49 @@
+1. change adapter settings
+	vmnet1 ipv4 10.0.0.10 255.255.255.0 and 10.0.0.10
+	vmnet8 ipv4 10.0.0.20 255.255.255.0 and 10.0.0.20
+
+Linux system:
+
+rpm -q samba
+cd /etc/samba
+vi samba.conf
+{
+[global]
+netbios name=localhost
+workgroup=LAB001
+[HR]
+path=/dept/hr
+Writable=yes
+Valid users=tyit01, tyit02
+[SALES]
+path=/dept/sales
+Writable=yes
+Valid users=tyit01, tyit02
+[ACCOUNTS]
+path = /dept/accounts
+Read Only = yes
+}
+
+mkdir /dept
+mkdir /dept/{hr,sales,accounts}
+touch /dept/hr/{1.txt,2.txt}
+touch /dept/sales/{3.txt,4.txt}
+touch /dept/accounts/{5.txt,6.txt}
+clea
+
+systemctl restart samba
+systemctl status samba
+
+testparm
+
+chmod -R 777 /dept
+
+useradd tyit01
+useradd tyit02
+
+smbpasswd -a tyit01
+smbpasswd -a tyit02
+
+setenforce 0
+
+systemctl stop firewalld
